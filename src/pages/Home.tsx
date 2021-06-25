@@ -1,20 +1,25 @@
+import { AuthContext } from '../App'
 import {useHistory} from 'react-router-dom'
-import {firebase, auth} from '../services/firebase'
+import { useContext } from 'react'
+
+import { Button } from '../components/Button'
 
 import illustrationImg from '../assets/images/illustration.svg'
 import logoImg from '../assets/images/logo.svg'
 import googleIconImg from '../assets/images/google-icon.svg'
-//  webpack {snowpack, vite}
-// Module Bundler 
-import { Button } from '../components/Button'
 
 import '../styles/auth.scss'
 
 export function Home(){
     const history = useHistory();
-    function handleCreateRoom(){
+    const {user, signInWithGoogle} = useContext(AuthContext)
 
-         history.push('/rooms/new')
+    async function handleCreateRoom() {
+        if(!user){
+            await signInWithGoogle()
+        }
+        history.push('/rooms/new')
+    
     }
 
     return(
@@ -46,3 +51,5 @@ export function Home(){
 }
 
 // Sempre criar os Elementos para depois estilizalos
+//  webpack {snowpack, vite}
+// Module Bundler 
