@@ -1,17 +1,9 @@
 import { useState } from "react";
-
-export function Button(){
-    const [counter, setCounter] = useState(0) // todo estado deve ser declarado como const
-
-    function increment(){
-        setCounter(counter + 1)
-        console.log(counter)
-    }
+import { ButtonHTMLAttributes } from 'react'
+import '../styles/button.scss'
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
+export function Button(props: ButtonProps) {
     return (
-        <button className="button">
-            {counter}
-         </button>
+        <button className="button" {...props} />
     )
 }
-
-// Conceito de Imutabilidade // Sempre criamos uma nova informação baseada em uma informação já existente
