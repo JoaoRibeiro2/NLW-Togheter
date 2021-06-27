@@ -3,6 +3,8 @@ import {useParams} from 'react-router-dom'
 import logoImg from '../assets/images/logo.svg'
 
 import {Button} from '../components/Button'
+import {Question} from '../components/Question'
+
 import {RoomCode} from '../components/RoomCode'
 import { useAuth } from '../hooks/useAuth'
 import { database } from '../services/firebase'
@@ -49,7 +51,7 @@ export function Room(){
 
         roomRef.on('value', room => {
             const databaseRoom = room.val()
-            const FirebaseQuestions: FirebaseQuestions = databaseRoom.questions
+            const FirebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
 
             const parsedQuestions = Object.entries(FirebaseQuestions).map(([key, value]) =>{
                
@@ -127,6 +129,18 @@ export function Room(){
                         <Button type="submit" disabled={!user}>Enviar pergunta</Button>
                     </div>
                 </form>
+
+                <div className="question-list">
+                {questions.map(question =>{
+                    return (
+                        <Question
+                            key={question.id}
+                            content={question.content}
+                            author={question.author}
+                        />
+                    )
+                })}
+                </div>
             </main>
         </div>
     )
